@@ -1,0 +1,4 @@
+# MCP Python SDK v1 line: provides mcp.server.fastmcp.FastMCP and the stdio / streamable-http clients.
+# (mcp 2.x renamed FastMCP to MCPServer; this project targets the API named in the assignment brief.)
+mcp>=1.10,<2
+pytest>=8.0

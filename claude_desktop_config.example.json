@@ -1,0 +1,40 @@
+{
+  "_comment": "Copy the three entries into Claude Desktop's claude_desktop_config.json. Replace <REPO> with the absolute path of this folder and <PYTHON> with the interpreter that has requirements.txt installed (e.g. <REPO>/.venv/Scripts/python.exe). products_server needs a KYC source: COMPLIANCE_GATEWAY=inprocess is self-contained; set it to http (and start `python -m compliance_comms_server --transport streamable-http`) to exercise the real cross-server path.",
+  "mcpServers": {
+    "bankforge-accounts": {
+      "command": "<PYTHON>",
+      "args": ["-m", "accounts_server"],
+      "cwd": "<REPO>",
+      "env": {
+        "PYTHONPATH": "<REPO>",
+        "BANKFORGE_DB_PATH": "<REPO>/neobank.db",
+        "LOG_LEVEL": "DEBUG",
+        "LOG_FILE": "<REPO>/logs/accounts_server.jsonl"
+      }
+    },
+    "bankforge-products": {
+      "command": "<PYTHON>",
+      "args": ["-m", "products_server"],
+      "cwd": "<REPO>",
+      "env": {
+        "PYTHONPATH": "<REPO>",
+        "BANKFORGE_DB_PATH": "<REPO>/neobank.db",
+        "COMPLIANCE_GATEWAY": "inprocess",
+        "COMPLIANCE_SERVER_URL": "http://127.0.0.1:8003/mcp",
+        "LOG_LEVEL": "DEBUG",
+        "LOG_FILE": "<REPO>/logs/products_server.jsonl"
+      }
+    },
+    "bankforge-compliance": {
+      "command": "<PYTHON>",
+      "args": ["-m", "compliance_comms_server"],
+      "cwd": "<REPO>",
+      "env": {
+        "PYTHONPATH": "<REPO>",
+        "BANKFORGE_DB_PATH": "<REPO>/neobank.db",
+        "LOG_LEVEL": "DEBUG",
+        "LOG_FILE": "<REPO>/logs/compliance_comms_server.jsonl"
+      }
+    }
+  }
+}
